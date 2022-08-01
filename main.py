@@ -31,9 +31,11 @@ password_label.grid(column=0, row=3, sticky="W")
 # ENTRY FIELDS
 website_field = Entry(width=35)
 website_field.grid(column=1, row=1, columnspan=2, sticky="W")
+website_field.focus()
 
 email_username_field = Entry(width=35)
 email_username_field.grid(column=1, row=2, columnspan=2, sticky="W")
+email_username_field.insert(END, "alucardluis@gmail.com")
 
 password_field = Entry(width=21)
 password_field.grid(column=1, row=3, sticky="W")
