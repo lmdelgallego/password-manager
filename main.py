@@ -6,7 +6,24 @@ FONT_NAME = "Courier"
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
-# ---------------------------- UI SETUP ------------------------------- #
+
+def save():
+    """
+    Saves the password to a file.
+    """
+
+    website = website_field.get()
+    password = password_field.get()
+    email = email_username_field.get()
+
+    with open("data.txt", "a") as data_file:
+        data_file.write(f"{website} | {password} | {email}\n")
+        website_field.delete(0, END)
+        password_field.delete(0, END)
+        print("Password saved.")
+
+    # ---------------------------- UI SETUP ------------------------------- #
+
 
 windows = Tk()
 windows.title("Password Manager")
@@ -45,7 +62,7 @@ password_field.grid(column=1, row=3, sticky="W")
 generate_password_button = Button(text="Generate Password")
 generate_password_button.grid(column=2, row=3, sticky="W")
 
-add_button = Button(text="Add", width=36)
+add_button = Button(text="Add", width=36, command=save)
 add_button.grid(column=1, row=4, columnspan=2, sticky="W")
 
 windows.mainloop()
