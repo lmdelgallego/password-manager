@@ -17,6 +17,11 @@ def save():
     password = password_field.get()
     email = email_username_field.get()
 
+    if len(website) == 0 or len(password) == 0 or len(email) == 0:
+        messagebox.showerror(
+            "Oops", "Please make sure you haven'y left any fields empty.")
+        return
+
     is_ok = messagebox.askokcancel(
         title=f"Saved {website}", message=f"These are the details entered: \n\nEmail: {email}\nPassword: {password}\n\nIt's ok to save?")
 
