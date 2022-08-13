@@ -62,14 +62,36 @@ def save():
                 json.dump(new_data, data_file, indent=4)
         else:
             data.update(new_data)
-
             with open("data.json", "w") as data_file:
                 json.dump(data, data_file, indent=4)
         finally:
             website_field.delete(0, END)
             password_field.delete(0, END)
-
             print("Password saved.")
+
+
+# ---------------------------- SEARCH PASSWORD ------------------------------- #
+
+def search():
+    website = website_field.get()
+    try:
+        with open("data.json", "r") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showerror("Error", "No Data file found.")
+
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(
+                "Password Found", "Email: " + email + "\nPassword: " + password)
+        else:
+            messagebox.showerror(
+                "Oops", "The website you entered doesn't exist in the database.")
+            website_field.delete(0, END)
+            password_field.delete(0, END)
+            print("Website not found.")
 
     # ---------------------------- UI SETUP ------------------------------- #
 
@@ -96,23 +118,26 @@ password_label.grid(column=0, row=3, sticky="W")
 
 # ENTRY FIELDS
 website_field = Entry(width=35)
-website_field.grid(column=1, row=1, columnspan=2, sticky="W")
+website_field.grid(column=1, row=1, sticky="W")
 website_field.focus()
 
 email_username_field = Entry(width=35)
 email_username_field.grid(column=1, row=2, columnspan=2, sticky="W")
 email_username_field.insert(END, "alucardluis@gmail.com")
 
-password_field = Entry(width=21)
+password_field = Entry(width=35)
 password_field.grid(column=1, row=3, sticky="W")
 
 # BUTTONS
 
 generate_password_button = Button(
-    text="Generate Password", command=generate_password)
+    text="Generate Password", width=18, command=generate_password)
 generate_password_button.grid(column=2, row=3, sticky="W")
 
 add_button = Button(text="Add", width=36, command=save)
 add_button.grid(column=1, row=4, columnspan=2, sticky="W")
+
+search_button = Button(text="Search", width=18, command=search)
+search_button.grid(column=2, row=1, columnspan=2, sticky="W")
 
 windows.mainloop()
